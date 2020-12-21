@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from flask_cors import cross_origin
 import sklearn
 import pickle
@@ -308,8 +308,10 @@ def predict():
         ]])
 
         output=round(prediction[0],2)
-
-        return render_template('home.html',prediction_text="FLight Fare for your journey will be around Rs. {}".format(output))
+        d={}
+        d['price'] = str(output)
+        return jsonify(d)
+        # return render_template('home.html',prediction_text="FLight Fare for your journey will be around Rs. {}".format(output))
 
 
     return render_template("home.html")
